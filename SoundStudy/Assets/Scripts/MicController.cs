@@ -54,9 +54,10 @@ public class MicController : MonoBehaviour
 
         // 最大最小サンプリング数を取得
         Microphone.GetDeviceCaps(deviceName, out minFreq, out maxFreq);
+        Debug.Log($"------minFreq = {minFreq}, maxFreq = {maxFreq}");
 
         // オーディオクリップにマイク情報をセット
-        audioClip = Microphone.Start(deviceName, true, recTime, minFreq);
+        audioClip = Microphone.Start(deviceName, true, recTime, maxFreq);
     }
 
     /// <summary>
