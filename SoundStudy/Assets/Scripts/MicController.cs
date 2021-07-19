@@ -7,12 +7,13 @@ public class MicController : MonoBehaviour
     AudioSource audioSource; //再生したりするためのソース
     AudioClip audioClip; //マイクの情報を設定するためのクリップ
     int minFreq, maxFreq; //周波数
-    int recTime = 200; //sec
+    int recTime = 10; //sec
     string deviceName; // デバイス名
 
     void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
+        //マイクのデバイス名取得
         if (Microphone.devices.Length>0) {
             deviceName = Microphone.devices[0];
             Debug.Log($"deviceName={deviceName}");
@@ -33,6 +34,7 @@ public class MicController : MonoBehaviour
     /// 録音チェック
     /// </summary>
     void RecCheck() {
+        //録音中か確認
         if (Microphone.IsRecording(deviceName)) {
             // 録音中なので停止
             RecEnd();
@@ -52,7 +54,7 @@ public class MicController : MonoBehaviour
             audioSource.Stop();
         }
 
-        // 最大最小サンプリング数を取得
+        // 最大・最小周波数を取得
         Microphone.GetDeviceCaps(deviceName, out minFreq, out maxFreq);
         Debug.Log($"------minFreq = {minFreq}, maxFreq = {maxFreq}");
 
